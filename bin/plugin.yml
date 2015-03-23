@@ -1,0 +1,26 @@
+name: PortablePortals
+description: 快速简单的传送门
+main: net.meano.PortablePortals.PortablePortals
+version: 1.0.2
+author: Meano
+
+commands:
+   pportals:
+      description: Spawn a portal
+      usage: /<command>
+      aliases: [pp, portableportalsl]
+   preload:
+      description: Reload files
+      usage: /<command>
+      aliases: [pr, portalreload]
+
+permissions:
+   PortablePortals.*:
+      default: op
+      children:
+         PortablePortals.Use: true
+         PortablePortals.Spawn: true
+   PortablePortals.Use:
+      default: true
+   PortablePortals.Create:
+      default: true
