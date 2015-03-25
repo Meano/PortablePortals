@@ -106,7 +106,7 @@ public class PortablePortals extends JavaPlugin {
 		im.setLore(lores);
 		this.PortalStar.setItemMeta(im);
 		ShapedRecipe portalCube = new ShapedRecipe(this.PortalStar)
-				.shape(new String[] { "*#*", "*%*", "*#*" })
+				.shape(new String[] { "*#*", "#%#", "*#*" })
 				.setIngredient('#', Material.EMERALD)
 				.setIngredient('*', Material.OBSIDIAN)
 				.setIngredient('%', Material.GOLDEN_APPLE);

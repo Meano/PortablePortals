@@ -52,7 +52,6 @@ public class PortalsListeners implements Listener {
 						}
 						final Player player = e.getPlayer();
 						if (!e.getItem().getItemMeta().getLore().get(0).equals(Msgs.Portals_LeftClickTo.getString())) {
-
 							player.sendMessage(ChatColor.RED + "不能使用！请联系管理员！");
 							return;
 						}
