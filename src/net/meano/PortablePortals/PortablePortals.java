@@ -1,6 +1,5 @@
 package net.meano.PortablePortals;
 
-//import java.io.IOException;
 import java.util.ArrayList;
 
 import net.meano.PortablePortals.PortalHandlers.Portal;
@@ -27,18 +26,16 @@ import org.bukkit.plugin.java.JavaPlugin;
 public class PortablePortals extends JavaPlugin {
 
 	public static Plugin me;
-	public ItemStack portal;
+	public ItemStack PortalStar;
 	public boolean update = false;
 	public String name = "";
 
 	@Override
 	public boolean onCommand(CommandSender sender, Command cmd, String label,String[] args) {
 		if (cmd.getName().equalsIgnoreCase("PPortals")) {
-			if ((sender instanceof Player)
-					&& sender.hasPermission("PortablePortals.Spawn")) {
-				// Define "player" as the one who sent the command
+			if ((sender instanceof Player) && sender.hasPermission("PortablePortals.Spawn")) {
 				Player player = (Player) sender;
-				ItemStack AddStars = this.portal.clone();
+				ItemStack AddStars = this.PortalStar.clone();
 				if(args.length>0){
 					if(args[0].matches("\\d+")){
 						AddStars.setAmount(Integer.parseInt(args[0]));
@@ -66,32 +63,13 @@ public class PortablePortals extends JavaPlugin {
 		saveConfig();
 		Files.getMessages().options().copyDefaults(true);
 		Files.saveMessages();
-
+		
 		PluginManager pm = getServer().getPluginManager();
 		pm = getServer().getPluginManager();
 		pm.registerEvents(new PortalsListeners(this), this);
-
-		this.portal = new ItemStack(Material.NETHER_STAR, 1);
-		ItemMeta im = this.portal.getItemMeta();
-		im.setDisplayName(Msgs.Portals_Title.getString());
-		ArrayList<String> lores = new ArrayList<String>();
-		lores.add(Msgs.Portals_LeftClickTo.getString());
-		lores.add(Msgs.Portals_RightClickTo.getString());
-		lores.add("" + ChatColor.WHITE + ChatColor.ITALIC + "------------");
-		lores.add(Msgs.Portals_Target.getString("None"));
-		im.setLore(lores);
-
-		this.portal.setItemMeta(im);
-
-		ShapedRecipe portalCube = new ShapedRecipe(this.portal)
-				.shape(new String[] { "*#*", "*%*", "*#*" })
-				.setIngredient('#', Material.EMERALD)
-				.setIngredient('*', Material.OBSIDIAN)
-				.setIngredient('%', Material.GOLDEN_APPLE);
-
-		Bukkit.getServer().addRecipe(portalCube);
-		// =======================================================================================
-
+		
+		PortalStarInitialize();
+		
 		Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(this, 
 			new Runnable() {
 				@Override
@@ -115,6 +93,24 @@ public class PortablePortals extends JavaPlugin {
 				}
 			}, Settings.portalRefreshTime(), 0);
 
+	}
+	public void PortalStarInitialize(){
+		this.PortalStar = new ItemStack(Material.NETHER_STAR, 1);
+		ItemMeta im = this.PortalStar.getItemMeta();
+		im.setDisplayName(Msgs.Portals_Title.getString());
+		ArrayList<String> lores = new ArrayList<String>();
+		lores.add(Msgs.Portals_LeftClickTo.getString());
+		lores.add(Msgs.Portals_RightClickTo.getString());
+		lores.add("" + ChatColor.WHITE + ChatColor.ITALIC + "------------");
+		lores.add(Msgs.Portals_Target.getString("None"));
+		im.setLore(lores);
+		this.PortalStar.setItemMeta(im);
+		ShapedRecipe portalCube = new ShapedRecipe(this.PortalStar)
+				.shape(new String[] { "*#*", "*%*", "*#*" })
+				.setIngredient('#', Material.EMERALD)
+				.setIngredient('*', Material.OBSIDIAN)
+				.setIngredient('%', Material.GOLDEN_APPLE);
+		Bukkit.getServer().addRecipe(portalCube);
 	}
 
 }

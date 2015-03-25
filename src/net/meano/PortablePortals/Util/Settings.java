@@ -11,10 +11,9 @@ public class Settings {
 				.getBoolean("Check for new update");
 	}
 
-	@SuppressWarnings("deprecation")
 	public static Material getItemRequired() {
-		return Material.getMaterial(PortablePortals.me.getConfig().getInt(
-				"Require Item To Use.ItemId"));
+		return Material.getMaterial(PortablePortals.me.getConfig().getString(
+				"Require Item To Use.Item"));
 	}
 
 	public static boolean isItemRequired() {

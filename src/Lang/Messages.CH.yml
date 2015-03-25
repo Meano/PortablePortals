@@ -5,7 +5,7 @@ Portals:
   No Target: 还没设置目的，请设置目的地
   Left Click To: '&2&l左键 &a设置当前位置为目的地.'
   Right Click To: '&6&l右键 &e打开传送门.'
-  Need Item: '&c&o你身上没有 <item>.'
+  Need Item: '&c&o传送需要消耗绿宝石，你身上没有绿宝石。'
 Action:
   Not Enough Room: '&5&l当地没有足够的空间对打开传送门!'
   Portal Opened: '&a&l传送门已开启!'
