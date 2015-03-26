@@ -140,8 +140,7 @@ public class PortalsListeners implements Listener {
 				if (RequireItem.getType().equals(Settings.getItemRequired())) {
 					if (RequireItem.getAmount() != 1){
 						RequireItem.setAmount(RequireItem.getAmount() - 1);
-					}
-					else{
+					}else{
 						player.getInventory().remove(RequireItem);
 					}
 					player.updateInventory();

@@ -27,28 +27,15 @@ public enum Msgs {
 	}
 	public String getString(String... replacement) {
 		try {
-			String message = ChatColor.translateAlternateColorCodes(
-					'&',
-					Files.getMessages()
-							.getString(this.string)
-							.replaceAll(
-									"&x",
-									"&"
-											+ String.valueOf(RandomChatColor
-													.getColor().getChar()))
-							.replaceAll(
-									"&y",
-									"&"
-											+ String.valueOf(RandomChatColor
-													.getFormat().getChar())))
-					+ " ";
-
+			String message = ChatColor.translateAlternateColorCodes('&',
+				Files.getMessages().getString(this.string)
+					.replaceAll("&x","&"+ String.valueOf(RandomChatColor.getColor().getChar()))
+					.replaceAll("&y","&" + String.valueOf(RandomChatColor.getFormat().getChar())))+ " ";
 			if (this.replace != "")
 				message = message.replaceAll(this.replace, replacement[0]);
-
 			return message;
 		} catch (NullPointerException npe) {
-			return "Unable to find message: " + this.string;
+			return "找不到消息: " + this.string;
 		}
 	}
 };

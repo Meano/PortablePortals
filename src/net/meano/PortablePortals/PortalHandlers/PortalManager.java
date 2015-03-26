@@ -2,10 +2,8 @@ package net.meano.PortablePortals.PortalHandlers;
 
 import java.util.ArrayList;
 
-
 import net.meano.PortablePortals.Util.Msgs;
 
-//import me.sniperzciinema.portal.Util.Msgs;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -34,7 +32,7 @@ public class PortalManager {
 		int y = loc.getBlockY();
 		int z = loc.getBlockZ();
 		World world = loc.getWorld();
-		String s = world.getName() + "," + x + "," + y + "," + z + ",";
+		String s = world.getName() + "," + x + "," + y + "," + z;
 		return s;
 	}
 
@@ -61,15 +59,13 @@ public class PortalManager {
 	}
 
 	public static Location getRoundedLocation(Location loc) {
-		return new Location(loc.getWorld(), loc.getBlockX(), loc.getBlockY(),
-				loc.getBlockZ(), loc.getPitch(), loc.getYaw());
+		return new Location(loc.getWorld(), loc.getBlockX(), loc.getBlockY(),loc.getBlockZ(), loc.getPitch(), loc.getYaw());
 	}
 
 	public static Location getTargetFromItem(ItemStack im) {
 		Location loc = null;
 		try {
-			String[] floc = ChatColor.stripColor(
-					im.getItemMeta().getLore().get(3).replaceAll(Msgs.Portals_Target.getTitleNoColor(),"")).split(",");
+			String[] floc = ChatColor.stripColor(im.getItemMeta().getLore().get(3).replaceAll(Msgs.Portals_Target.getTitleNoColor(),"")).split(",");
 			World world = Bukkit.getServer().getWorld(floc[0].trim());
 			loc = new Location(world, Double.valueOf(floc[1]),
 					Double.valueOf(floc[2]), Double.valueOf(floc[3]));
