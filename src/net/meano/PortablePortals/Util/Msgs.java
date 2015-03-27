@@ -35,8 +35,7 @@ public enum Msgs {
 	
 	public String getString(String... replacement) {
 		try {
-			String message = ChatColor.translateAlternateColorCodes('&',
-				Files.getMessages().getString(this.string)
+			String message = ChatColor.translateAlternateColorCodes('&',Files.getMessages().getString(this.string)
 					.replaceAll("&x","&"+ String.valueOf(RandomChatColor.getColor().getChar()))
 					.replaceAll("&y","&" + String.valueOf(RandomChatColor.getFormat().getChar())))+ " ";
 			if (this.replace != "")

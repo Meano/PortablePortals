@@ -77,8 +77,9 @@ public class PortalsListeners implements Listener {
 								e.getItem().setAmount(e.getItem().getAmount() - 1);
 							else
 								player.setItemInHand(null);
-
+							player.updateInventory();
 							player.getInventory().addItem(portal);
+							player.updateInventory();
 							player.sendMessage(Msgs.Portals_TargetSet.getString());
 						} else if (e.getAction() == Action.RIGHT_CLICK_BLOCK) { // Save
 							if (player.hasPermission("PortablePortals.Create")) {
