@@ -71,7 +71,6 @@ public class PortalsListeners implements Listener {
 							lores.add(Msgs.Portals_RightClickTo.getString());
 							lores.add("" + ChatColor.WHITE + ChatColor.ITALIC + "------------");
 							lores.add(Msgs.Portals_Target.getString(locationString));
-							player.sendMessage(locationString);
 							im.setLore(lores);
 							portal.setItemMeta(im);
 							if (e.getItem().getAmount() != 1)

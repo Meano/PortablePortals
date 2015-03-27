@@ -1,11 +1,8 @@
 package net.meano.PortablePortals.PortalHandlers;
 
 import java.util.ArrayList;
-
 import net.meano.PortablePortals.Util.Msgs;
-
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
@@ -15,10 +12,8 @@ public class PortalManager {
 
 	private static ArrayList<Portal> portals = new ArrayList<Portal>();
 
-	public static Portal addPortal(Location loc, Location target, ItemStack im,
-			Player p) {
-		Portal portal = new Portal(getRoundedLocation(loc.add(0, 1, 0)),
-				target, im, p);
+	public static Portal addPortal(Location loc, Location target, ItemStack im, Player p) {
+		Portal portal = new Portal(getRoundedLocation(loc.add(0, 1, 0)), target, im, p);
 		PortalManager.portals.add(portal);
 		return portal;
 	}
@@ -41,8 +36,7 @@ public class PortalManager {
 		if (loc != null) {
 			String[] floc = loc.split(",");
 			World world = Bukkit.getServer().getWorld(floc[0]);
-			Loc = new Location(world, Double.valueOf(floc[1]),
-					Double.valueOf(floc[2]), Double.valueOf(floc[3]));
+			Loc = new Location(world, Double.valueOf(floc[1]), Double.valueOf(floc[2]), Double.valueOf(floc[3]));
 		}
 		return Loc;
 	}
@@ -65,10 +59,9 @@ public class PortalManager {
 	public static Location getTargetFromItem(ItemStack im) {
 		Location loc = null;
 		try {
-			String[] floc = ChatColor.stripColor(im.getItemMeta().getLore().get(3).replaceAll(Msgs.Portals_Target.getTitleNoColor(),"")).split(",");
+			String[] floc = Msgs.Portals_Target.getTitleWithColor(im.getItemMeta().getLore().get(3)).split(",");
 			World world = Bukkit.getServer().getWorld(floc[0].trim());
-			loc = new Location(world, Double.valueOf(floc[1]),
-					Double.valueOf(floc[2]), Double.valueOf(floc[3]));
+			loc = new Location(world, Double.valueOf(floc[1]), Double.valueOf(floc[2]), Double.valueOf(floc[3]));
 		} catch (Exception e) {
 		}
 		return loc;
@@ -78,7 +71,6 @@ public class PortalManager {
 		for (Portal portal : PortalManager.portals)
 			if (portal.getItem() == im)
 				return true;
-
 		return false;
 	}
 

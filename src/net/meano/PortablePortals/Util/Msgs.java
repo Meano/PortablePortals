@@ -1,4 +1,6 @@
 package net.meano.PortablePortals.Util;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import org.bukkit.ChatColor;
 
 public enum Msgs {
@@ -19,12 +21,18 @@ public enum Msgs {
 		this.string = s;
 		this.replace = r;
 	}
-	public String getTitleNoColor()
-	{
+	
+	public String getTitleWithColor(String Get){
 		String message = ChatColor.translateAlternateColorCodes('&',Files.getMessages().getString(this.string));
-		message = message.substring(0,message.indexOf(this.replace));
-		return message;
+		Pattern MessagePattern=Pattern.compile(message.replace(replace, "(.*?)\\"));
+		Matcher MessageMatcher = MessagePattern.matcher(Get);
+		if(MessageMatcher.find()){
+			return MessageMatcher.group(1);
+		}else{
+			return "";
+		}
 	}
+	
 	public String getString(String... replacement) {
 		try {
 			String message = ChatColor.translateAlternateColorCodes('&',
