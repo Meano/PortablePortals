@@ -83,44 +83,43 @@ public class PortalsListeners implements Listener {
 							player.sendMessage(Msgs.Portals_TargetSet.getString());
 						} else if (e.getAction() == Action.RIGHT_CLICK_BLOCK) { // Save
 							if (player.hasPermission("PortablePortals.Create")) {
-								if (hasItemRequired(player)) {
-									Location target = PortalManager.getTargetFromItem(e.getItem());
-									if (target == null) { // 未设置目的地
-										player.sendMessage(Msgs.Portals_NoTarget.getString());
-									} else if (target.getWorld().getName().equalsIgnoreCase("world_nether") && target.getBlockY() > 120) {
-										player.sendMessage(ChatColor.RED + "无法到达目的地！");
-										return;
+								Location target = PortalManager.getTargetFromItem(e.getItem());
+								if (target == null) { // 未设置目的地
+									player.sendMessage(Msgs.Portals_NoTarget.getString());
+								} else if (target.getWorld().getName().equalsIgnoreCase("world_nether") && target.getBlockY() > 120) {
+									player.sendMessage(ChatColor.RED + "无法到达目的地！");
+									return;
+								} else {
+									final Portal portal = PortalManager.addPortal(e.getClickedBlock().getLocation(), target, e.getItem(), player);
+									player.getWorld().createExplosion(portal.getLocation(), 0.0F, false);
+									if (!portal.canCreatePortal()) {
+										player.sendMessage(Msgs.Portals_NotEnoughRoom.getString());
+										PortalManager.delPortal(portal);
 									} else {
-										final Portal portal = PortalManager.addPortal(e.getClickedBlock().getLocation(), target, e.getItem(), player);
-										// player.updateInventory();
-										player.getWorld().createExplosion(portal.getLocation(), 0.0F, false);
-
-										if (!portal.canCreatePortal()) {
-											player.sendMessage(Msgs.Portals_NotEnoughRoom.getString());
-											PortalManager.delPortal(portal);
-										} else {
-											player.getInventory().remove(e.getItem());
-											player.updateInventory();
-											portal.createPortal();
-											player.sendMessage(Msgs.Portals_PortalOpened.getString()); // 传送门已经打开
-											portal.playEffect();
-											Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(PortablePortals.me, new Runnable() {
-												@Override
-												public void run() {
-													if (player.isOnline() && player.getInventory().firstEmpty() != -1)
-														player.getInventory().addItem(portal.getItem());
-													else
-														portal.getLocation().getWorld().dropItemNaturally(portal.getLocation(), portal.getItem());
-													player.updateInventory();
-													player.sendMessage(Msgs.Portals_PortalClosed.getString()); // 发出传送门关闭的消息
-													portal.removePortal(); // 移除传送门
-													PortalManager.delPortal(portal); // 删除传送门
-												}
-											}, Settings.stayOpenTime());
+										if (!hasItemRequired(player)) {
+											player.sendMessage(Msgs.Portals_NeedItem.getString());
+											return;
 										}
+										player.getInventory().remove(e.getItem());
+										player.updateInventory();
+										portal.createPortal();
+										player.sendMessage(Msgs.Portals_PortalOpened.getString()); // 传送门已经打开
+										portal.playEffect();
+										Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(PortablePortals.me, new Runnable() {
+											@Override
+											public void run() {
+												if (player.isOnline() && player.getInventory().firstEmpty() != -1)
+													player.getInventory().addItem(portal.getItem());
+												else
+													portal.getLocation().getWorld().dropItemNaturally(portal.getLocation(), portal.getItem());
+												player.updateInventory();
+												player.sendMessage(Msgs.Portals_PortalClosed.getString()); // 发出传送门关闭的消息
+												portal.removePortal(); // 移除传送门
+												PortalManager.delPortal(portal); // 删除传送门
+											}
+										}, Settings.stayOpenTime());
 									}
-								} else
-									player.sendMessage(Msgs.Portals_NeedItem.getString(Settings.getItemRequired().name()));
+								}	
 							}
 						}
 						e.setUseInteractedBlock(Result.DENY);
