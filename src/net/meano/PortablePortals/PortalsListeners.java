@@ -95,11 +95,7 @@ public class PortalsListeners implements Listener {
 									if (!portal.canCreatePortal()) {
 										player.sendMessage(Msgs.Portals_NotEnoughRoom.getString());
 										PortalManager.delPortal(portal);
-									} else {
-										if (!hasItemRequired(player)) {
-											player.sendMessage(Msgs.Portals_NeedItem.getString());
-											return;
-										}
+									} else if(hasItemRequired(player)) {
 										player.getInventory().remove(e.getItem());
 										player.updateInventory();
 										portal.createPortal();
@@ -118,6 +114,9 @@ public class PortalsListeners implements Listener {
 												PortalManager.delPortal(portal); // É¾³ý´«ËÍÃÅ
 											}
 										}, Settings.stayOpenTime());
+									}else{
+										player.sendMessage(Msgs.Portals_NeedItem.getString());
+										PortalManager.delPortal(portal);
 									}
 								}	
 							}

@@ -38,7 +38,7 @@ public enum Msgs {
 			String message = ChatColor.translateAlternateColorCodes('&',Files.getMessages().getString(this.string)
 					.replaceAll("&x","&"+ String.valueOf(RandomChatColor.getColor().getChar()))
 					.replaceAll("&y","&" + String.valueOf(RandomChatColor.getFormat().getChar())))+ " ";
-			if (this.replace != "")
+			if (this.replace != ""&&replacement.length!=0)
 				message = message.replaceAll(this.replace, replacement[0]);
 			return message;
 		} catch (NullPointerException npe) {
