@@ -1,7 +1,7 @@
 # Portable Portals config, Last edited in 1.0.2
 # "Stay Open Time" is how long a portal will stay open
 # "Check If In Portal Refresh Time" How many seconds between checking if a players in a portal(The lower the number the higher the lagg)
-Check for new updates: false 
+Check for new updates: false
 Portals:
   Stay Open Time: 10
   Check If In Portal Refresh Time: 1

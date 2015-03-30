@@ -35,7 +35,7 @@ public class PortablePortals extends JavaPlugin {
 		if (cmd.getName().equalsIgnoreCase("PPortals")) {
 			if ((sender instanceof Player) && sender.hasPermission("PortablePortals.Spawn")) {
 				Player player = (Player) sender;
-				ItemStack AddStars = this.PortalStar.clone();
+				ItemStack AddStars = PortalStar.clone();
 				if(args.length>0){
 					if(args[0].matches("\\d+")){
 						AddStars.setAmount(Integer.parseInt(args[0]));
@@ -68,7 +68,13 @@ public class PortablePortals extends JavaPlugin {
 		pm = getServer().getPluginManager();
 		pm.registerEvents(new PortalsListeners(this), this);
 		
-		PortalStarInitialize();
+		PortalStar = PortalStarInitialize("无");
+		ShapedRecipe portalCube = new ShapedRecipe(this.PortalStar)
+		.shape(new String[] { "*#*", "#%#", "*#*" })
+		.setIngredient('#', Material.EMERALD)
+		.setIngredient('*', Material.OBSIDIAN)
+		.setIngredient('%', Material.GOLDEN_APPLE);
+		Bukkit.getServer().addRecipe(portalCube);
 		
 		Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(this, 
 			new Runnable() {
@@ -94,23 +100,18 @@ public class PortablePortals extends JavaPlugin {
 			}, Settings.portalRefreshTime(), 0);
 
 	}
-	public void PortalStarInitialize(){
-		this.PortalStar = new ItemStack(Material.NETHER_STAR, 1);
-		ItemMeta im = this.PortalStar.getItemMeta();
+	public ItemStack PortalStarInitialize(String Target){
+		ItemStack Star = new ItemStack(Material.NETHER_STAR, 1);
+		ItemMeta im = Star.getItemMeta();
 		im.setDisplayName(Msgs.Portals_Title.getString());
 		ArrayList<String> lores = new ArrayList<String>();
 		lores.add(Msgs.Portals_LeftClickTo.getString());
 		lores.add(Msgs.Portals_RightClickTo.getString());
 		lores.add("" + ChatColor.WHITE + ChatColor.ITALIC + "------------");
-		lores.add(Msgs.Portals_Target.getString("None"));
+		lores.add(Msgs.Portals_Target.getString(Target));
 		im.setLore(lores);
-		this.PortalStar.setItemMeta(im);
-		ShapedRecipe portalCube = new ShapedRecipe(this.PortalStar)
-				.shape(new String[] { "*#*", "#%#", "*#*" })
-				.setIngredient('#', Material.EMERALD)
-				.setIngredient('*', Material.OBSIDIAN)
-				.setIngredient('%', Material.GOLDEN_APPLE);
-		Bukkit.getServer().addRecipe(portalCube);
+		Star.setItemMeta(im);
+		return Star;
 	}
 
 }

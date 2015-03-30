@@ -42,7 +42,7 @@ public enum Msgs {
 				message = message.replaceAll(this.replace, replacement[0]);
 			return message;
 		} catch (NullPointerException npe) {
-			return "ÕÒ²»µ½ÏûÏ¢: " + this.string;
+			return "æ‰¾ä¸åˆ°æ¶ˆæ¯: " + this.string;
 		}
 	}
 };

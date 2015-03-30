@@ -69,7 +69,7 @@ public class Files {
 		try {
 			getMessages().save(Files.messagesFile);
 		} catch (IOException ex) {
-			Bukkit.getLogger().log(Level.SEVERE,"不能保存文件 " + Files.messagesFile, ex);
+			Bukkit.getLogger().log(Level.SEVERE,"涓嶈兘淇濆瓨鏂囦欢 " + Files.messagesFile, ex);
 		}
 	}
 }

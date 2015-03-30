@@ -1,6 +1,5 @@
 package net.meano.PortablePortals;
 
-import java.util.ArrayList;
 import net.meano.PortablePortals.PortalHandlers.Portal;
 import net.meano.PortablePortals.PortalHandlers.PortalManager;
 import net.meano.PortablePortals.Util.Msgs;
@@ -19,7 +18,6 @@ import org.bukkit.event.block.Action;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 
 public class PortalsListeners implements Listener {
 
@@ -42,8 +40,8 @@ public class PortalsListeners implements Listener {
 			if (e.getItem().getType().equals(Material.NETHER_STAR))
 				if (e.getItem().getItemMeta().hasLore())
 					if (e.getPlayer().hasPermission("PortablePortals.Create")) {
-						// Çå³ı·Ï¾ÉµÄË¢³öÀ´µÄĞÇĞÇ
-						if (e.getItem().getItemMeta().getLore().get(1).contains("ÓÒ¼üµã»÷")) {
+						// æ¸…é™¤åºŸæ—§çš„åˆ·å‡ºæ¥çš„æ˜Ÿæ˜Ÿ
+						if (e.getItem().getItemMeta().getLore().get(1).contains("å³é”®ç‚¹å‡»")) {
 							Location tar = PortalManager.getTargetFromItem(e.getItem());
 							if (tar == null) {
 								e.getPlayer().getInventory().remove(e.getItem());
@@ -52,27 +50,17 @@ public class PortalsListeners implements Listener {
 						}
 						final Player player = e.getPlayer();
 						if (!e.getItem().getItemMeta().getLore().get(0).equals(Msgs.Portals_LeftClickTo.getString())) {
-							player.sendMessage(ChatColor.RED + "²»ÄÜÊ¹ÓÃ£¡ÇëÁªÏµ¹ÜÀíÔ±£¡");
+							player.sendMessage(ChatColor.RED + "ä¸èƒ½ä½¿ç”¨ï¼è¯·è”ç³»ç®¡ç†å‘˜ï¼");
 							return;
 						}
 						if (e.getAction() == Action.LEFT_CLICK_BLOCK) {
 							Location loc = e.getClickedBlock().getLocation().clone().add(0.0, 1.0, 0.0);
 							if (loc.getWorld().getName().equalsIgnoreCase("world_nether") && loc.getBlockY() > 120) {
-								player.sendMessage(ChatColor.RED + "ÎŞ·¨Éè¶¨Ä¿µÄµØ£¡");
+								player.sendMessage(ChatColor.RED + "æ— æ³•è®¾å®šç›®çš„åœ°ï¼");
 								return;
 							}
 							String locationString = PortalManager.getLocationToString(loc);
-							ItemStack portal = e.getItem().clone();
-							portal.setAmount(1);
-							ItemMeta im = portal.getItemMeta();
-							im.setDisplayName(Msgs.Portals_Title.getString());
-							ArrayList<String> lores = new ArrayList<String>();
-							lores.add(Msgs.Portals_LeftClickTo.getString());
-							lores.add(Msgs.Portals_RightClickTo.getString());
-							lores.add("" + ChatColor.WHITE + ChatColor.ITALIC + "------------");
-							lores.add(Msgs.Portals_Target.getString(locationString));
-							im.setLore(lores);
-							portal.setItemMeta(im);
+							ItemStack portal = ((PortablePortals) PortablePortals.me).PortalStarInitialize(locationString);
 							if (e.getItem().getAmount() != 1)
 								e.getItem().setAmount(e.getItem().getAmount() - 1);
 							else
@@ -84,10 +72,10 @@ public class PortalsListeners implements Listener {
 						} else if (e.getAction() == Action.RIGHT_CLICK_BLOCK) { // Save
 							if (player.hasPermission("PortablePortals.Create")) {
 								Location target = PortalManager.getTargetFromItem(e.getItem());
-								if (target == null) { // Î´ÉèÖÃÄ¿µÄµØ
+								if (target == null) { // æœªè®¾ç½®ç›®çš„åœ°
 									player.sendMessage(Msgs.Portals_NoTarget.getString());
 								} else if (target.getWorld().getName().equalsIgnoreCase("world_nether") && target.getBlockY() > 120) {
-									player.sendMessage(ChatColor.RED + "ÎŞ·¨µ½´ïÄ¿µÄµØ£¡");
+									player.sendMessage(ChatColor.RED + "æ— æ³•åˆ°è¾¾ç›®çš„åœ°ï¼");
 									return;
 								} else {
 									final Portal portal = PortalManager.addPortal(e.getClickedBlock().getLocation(), target, e.getItem(), player);
@@ -99,7 +87,7 @@ public class PortalsListeners implements Listener {
 										player.getInventory().remove(e.getItem());
 										player.updateInventory();
 										portal.createPortal();
-										player.sendMessage(Msgs.Portals_PortalOpened.getString()); // ´«ËÍÃÅÒÑ¾­´ò¿ª
+										player.sendMessage(Msgs.Portals_PortalOpened.getString()); // ä¼ é€é—¨å·²ç»æ‰“å¼€
 										portal.playEffect();
 										Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(PortablePortals.me, new Runnable() {
 											@Override
@@ -109,9 +97,9 @@ public class PortalsListeners implements Listener {
 												else
 													portal.getLocation().getWorld().dropItemNaturally(portal.getLocation(), portal.getItem());
 												player.updateInventory();
-												player.sendMessage(Msgs.Portals_PortalClosed.getString()); // ·¢³ö´«ËÍÃÅ¹Ø±ÕµÄÏûÏ¢
-												portal.removePortal(); // ÒÆ³ı´«ËÍÃÅ
-												PortalManager.delPortal(portal); // É¾³ı´«ËÍÃÅ
+												player.sendMessage(Msgs.Portals_PortalClosed.getString()); // å‘å‡ºä¼ é€é—¨å…³é—­çš„æ¶ˆæ¯
+												portal.removePortal(); // ç§»é™¤ä¼ é€é—¨
+												PortalManager.delPortal(portal); // åˆ é™¤ä¼ é€é—¨
 											}
 										}, Settings.stayOpenTime());
 									}else{
