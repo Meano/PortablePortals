@@ -54,6 +54,12 @@ public class PortablePortals extends JavaPlugin {
 
 	@Override
 	public void onDisable() {
+		for (Portal portal : PortalManager.getPortals()){
+			Bukkit.broadcastMessage(ChatColor.RED + "服务器重启或停止的原因，传送之星提前关闭，会在传送门生成的地方掉落传送之星!");
+			portal.getLocation().getWorld().dropItemNaturally(portal.getLocation(), portal.getItem());
+			portal.removePortal();
+			PortalManager.delPortal(portal);
+		}
 	}
 
 	@Override
