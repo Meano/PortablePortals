@@ -2,6 +2,8 @@ name: PortablePortals
 description: 快速简单的传送门
 main: net.meano.PortablePortals.PortablePortals
 version: 1.2
+api-version: 1.14
+website: www.meano.net
 author: Meano
 
 commands:

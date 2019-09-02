@@ -11,3 +11,4 @@ Action:
   Portal Opened: '&a&lThe Portal has opened!'
   Portal Closed: '&c&lThe Portal has been closed!'
   Target Set: '&d&oThe location of this portal has been set!'
+  Target Change: '&d&oThe location of this portal has been changed!'

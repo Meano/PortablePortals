@@ -13,6 +13,7 @@ public enum Msgs {
 	Portals_PortalOpened("Action.Portal Opened", ""),
 	Portals_PortalClosed("Action.Portal Closed", ""),
 	Portals_TargetSet("Action.Target Set",""),
+	Portals_TargetChange("Action.Target Change",""),
 	Portals_NoTarget("Portals.No Target", "");
 	private String string;
 	private String replace;
@@ -42,7 +43,7 @@ public enum Msgs {
 				message = message.replaceAll(this.replace, replacement[0]);
 			return message;
 		} catch (NullPointerException npe) {
-			return "找不到消息: " + this.string;
+			return "字符串资源丢失: " + this.string;
 		}
 	}
 };
